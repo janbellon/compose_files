@@ -10,7 +10,13 @@ services:
     env_file:
       - path: override.env
         required: true
+    networks:
+      - caddy
   mediawiki_db:
     env_file:
       - path: override.env
         required: true
+
+networks:
+  caddy:
+    external: true
