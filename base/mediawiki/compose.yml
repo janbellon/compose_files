@@ -15,7 +15,7 @@ services:
     container_name: mediawiki_db
     volumes:
       - mediawiki_db:/var/lib/mysql
-    env_vile:
+    env_file:
       - path: default.env
         required: true
     networks:
