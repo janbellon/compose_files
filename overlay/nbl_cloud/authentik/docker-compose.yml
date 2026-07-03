@@ -1,0 +1,18 @@
+include:
+  - ../../../base/authentik/compose.yml
+
+services:
+  authentik_server:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://authentik:9000"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    networks:
+      - caddy
+    env_file:
+      - path: override.env
+        required: true
+  authentik_db:
+    env_file:
+      - path: override.env
+        required: true

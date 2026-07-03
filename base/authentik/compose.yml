@@ -1,0 +1,36 @@
+services:
+  authentik_server:
+    container_name: authentik_server
+    networks:
+      - authentik
+    image: ghcr.io/goauthentik/server:2026.5.3
+    restart: unless-stopped
+    env_file: default.env
+    command: server
+  authentik_worker:
+    container_name: authentik_worker
+    networks:
+      - authentik
+    image: ghcr.io/goauthentik/worker:2026.5.3
+    restart: unless-stopped
+    command: worker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/share/ca-certificates:/usr/local/share/ca-certificates
+  authentik_db:
+    container_name: authentik_db
+    networks:
+      - authentik
+    image: postgres:18
+    restart: unless-stopped
+    command: ["postgres", "-c", "log_destination=jsonlog", "-c", "logging_collector=on", "-c", "log_min_duration_statement=100", "-c", "log_connections=on", "-c", "log_disconnections=on"]
+    env_file: default.env
+    volumes:
+      - authentik_db_data:/var/lib/postgresql/data
+
+networks:
+  authentik:
+
+volumes:
+  authentik_db_data: {}
+

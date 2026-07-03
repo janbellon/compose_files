@@ -1,0 +1,12 @@
+include:
+  - ../../../base/authentik/compose.yml
+
+services:
+  authentik_server:
+    env_file:
+      - path: override.env
+        required: true
+  authentik_db:
+    env_file:
+      - path: override.env
+        required: true
