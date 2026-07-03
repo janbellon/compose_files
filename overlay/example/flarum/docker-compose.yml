@@ -1,0 +1,12 @@
+include:
+  - ../../../base/flarum/compose.yml
+
+services:
+  flarum:
+    env_file:
+      - path: override.env
+        required: true
+  flarum_db:
+    env_file:
+      - path: override.env
+        required: true

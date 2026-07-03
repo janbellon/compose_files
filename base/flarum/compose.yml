@@ -1,0 +1,31 @@
+services:
+  flarum:
+    container_name: flarum
+    image: crazymax/flarum:1.8.10
+    restart: unless-stopped
+    networks:
+      - flarum
+    env_file: 
+      - path: default.env
+        required: true
+    volumes:
+      - flarum_data:/data
+      - flarum_opt:/opt/flarum
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
+  flarum_db:
+    container_name: flarum_db
+    image: mariadb:10.11
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true
+    networks:
+      - flarum
+    volumes:
+      - flarum_db:/var/lib/mysql
+
+volumes:
+  flarum_data:
+  flarum_opt:
+  flarum_db:

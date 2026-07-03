@@ -1,0 +1,26 @@
+include:
+  - ../../../base/flarum/compose.yml
+
+services:
+  flarum:
+    labels:
+      caddy_0: nobell.fr
+      caddy_0.reverse_proxy: "http://flarum"
+      caddy_0.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+      caddy_1: "www.nobell.fr forum.nobell.fr"
+      caddy_1.redir: "https://nobell.fr/{uri}"
+    networks:
+      - caddy
+    env_file:
+      - path: override.env
+        required: true
+  flarum_db:
+    networks:
+      - caddy
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true
