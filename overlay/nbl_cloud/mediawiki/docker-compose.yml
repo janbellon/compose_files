@@ -1,0 +1,16 @@
+include:
+  - ../../../base/mediawiki/compose.yml
+
+services:
+  mediawiki:
+    labels:
+      caddy: wikipedia.nobell.fr
+      caddy.reverse_proxy: "http://mediawiki"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+    env_file:
+      - path: override.env
+        required: true
+  mediawiki_db:
+    env_file:
+      - path: override.env
+        required: true

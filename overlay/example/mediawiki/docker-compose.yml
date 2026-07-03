@@ -1,0 +1,12 @@
+include:
+  - ../../../base/mediawiki/compose.yml
+
+services:
+  mediawiki:
+    env_file:
+      - path: override.env
+        required: true
+  mediawiki_db:
+    env_file:
+      - path: override.env
+        required: true

@@ -1,0 +1,29 @@
+services:
+  mediawiki:
+    image: mediawiki:1.46.0
+    container_name: mediawiki
+    volumes:
+      - mediawiki_data:/var/www/html
+    env_file:
+      - path: default.env
+        required: true
+    networks:
+      - mediawiki
+
+  mediawiki_db:
+    image: mariadb:12.3.2
+    container_name: mediawiki_db
+    volumes:
+      - mediawiki_db:/var/lib/mysql
+    env_vile:
+      - path: default.env
+        required: true
+    networks:
+      - mediawiki
+
+networks:
+  mediawiki:
+
+volumes:
+  mediawiki_data:
+  mediawiki_db:
