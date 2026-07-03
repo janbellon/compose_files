@@ -5,7 +5,9 @@ services:
       - authentik
     image: ghcr.io/goauthentik/server:2026.5.3
     restart: unless-stopped
-    env_file: default.env
+    env_file: 
+      - path: default.env
+        required: true
     command: server
   authentik_worker:
     container_name: authentik_worker
@@ -24,7 +26,9 @@ services:
     image: postgres:18
     restart: unless-stopped
     command: ["postgres", "-c", "log_destination=jsonlog", "-c", "logging_collector=on", "-c", "log_min_duration_statement=100", "-c", "log_connections=on", "-c", "log_disconnections=on"]
-    env_file: default.env
+    env_file: 
+      - path: default.env
+        required: true
     volumes:
       - authentik_db_data:/var/lib/postgresql/data
 
