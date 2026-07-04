@@ -1,0 +1,164 @@
+auth:
+  secret-key: ${SECRET_KEY} # this must be set to a random value generated using the secret:make CLI command
+  users:
+    admin:
+      password: ${ADMIN_PASSWORD}
+    jan:
+      password: ${USER_PASSWORD}
+
+server:
+  proxied: true
+  assets-path: /app/assets
+
+branding:
+#  custom-footer: |
+#    <p>Powered by <a href="https://github.com/glanceapp/glance">Glance</a></p>
+#  logo-url: /assets/logo.png
+  favicon-url: /assets/favicon.ico
+  app-name: "Glance Nobell"
+#  app-icon-url: "/assets/app-icon.png"
+#  app-background-color: "#151519"
+
+pages:
+  - name: Home
+    # Optionally, if you only have a single page you can hide the desktop navigation for a cleaner look
+    # hide-desktop-navigation: true
+
+    columns:
+      - size: small
+        widgets:
+          - type: rss
+            title: CVE Critiques
+            limit: 25
+            collapse-after: 15
+            cache: 12h
+            feeds:
+              - url: https://cvefeed.io/rssfeed/severity/high.xml
+                title: cvefeed.io
+                limit: 25
+          - type: markets
+            title: Bourse
+            markets:
+              - symbol: BTC-EUR
+                name: BTC/EUR
+              - symbol: ETH-EUR
+                name: ETH/EUR
+              - symbol: NVDA
+                name: NVIDIA
+              - symbol: AAPL
+                name: Apple
+              - symbol: MSFT
+                name: Microsoft
+
+      - size: full
+        widgets:
+
+          - type: group
+            title: Vidéos
+            widgets:
+              - type: videos
+                title: Medias citoyens
+                limit: 20
+#                style: grid-cards
+                channels:
+                  - UCAcAnMF0OrCtUep3Y4M-ZPw # Hugo Decrypte
+                  - UCPBjdTCGxu-_i-7a_EQxQeA # Theo Malini
+                  - UCsBPtU4hJkWNQ4kA-IsxgKw # IdrissAberkane
+              - type: videos
+                title: Youtube tech
+                limit: 20
+#                style: grid-cards
+                channels:
+                  - UCWedHS9qKebauVIK2J7383g # Underscore
+                  - UCA6rJQnIFgQOcjO-xtNV7lg # Hardisk
+                  - UCFqa4N0_WhVctqkqiHXm_QA # Hardisk TV
+                  - UCYnvxJ-PKiGXo_tYXpWAC-w # Micode
+                  - UC9x0AN7BWHpCDHSm9NiJFJQ # NetworkChuck
+          - type: group
+            widgets:
+              - type: rss
+                title: RSS Actu
+                limit: 20
+                collapse-after: 5
+                style: detailed-list
+                cache: 12h
+                feeds:
+                  - url: https://www.lemonde.fr/international/rss_full.xml
+                    title: Le Monde
+                    limit: 4
+                  - url: https://feeds.bbci.co.uk/news/world/rss.xml
+                    title: BBC
+                    limit: 4
+                  - url: https://www.france24.com/fr/rss
+                    title: France 24
+                    limit: 4
+                  - url: https://www.lefigaro.fr/rss/figaro_actualites.xml
+                    title: Le Figaro
+                    limit: 4
+
+              - type: rss
+                title: Hackernews
+                limit: 20
+                style: detailed-list
+                collapse-after: 15
+                cache: 12h
+                feeds:
+                  - url: https://hnrss.org/newest?q=cve
+                    title: hackernews.cve
+                    limit: 10
+                  - url: https://hnrss.org/newest?q=attack
+                    title: hackernews.attacks
+                    limit: 10
+                  - url: https://hnrss.org/newest?q=vulnerability
+                    title: hackernews.vulnerability
+                    limit: 10
+
+              - type: reddit
+                title: r/news
+                subreddit: news
+                show-thumbnails: true
+                sort-by: new
+
+              - type: reddit
+                title: r/worldnews
+                subreddit: worldnews
+                show-thumbnails: true
+                sort-by: new
+
+      - size: small
+        widgets:
+          - type: weather
+            title: Météo
+            location: Villiers-sur-Marne, France
+            units: metric # alternatively "imperial"
+            hour-format: 24h # alternatively "24h"
+            # Optionally hide the location from being displayed in the widget
+            # hide-location: true
+          - type: calendar
+            title: Calendrier
+            first-day-of-week: monday
+
+  - name: CVE
+    columns:
+      - size: small
+        widgets:
+          - type: rss
+            title: CVE Critiques
+            limit: 25
+            collapse-after: 20
+            cache: 12h
+            feeds:
+              - url: https://cvefeed.io/rssfeed/severity/high.xml
+                title: cvefeed.io
+                limit: 25
+      - size: full
+        widgets:
+          - type: rss
+            title: CVE
+            limit: 25
+            collapse-after: 20
+            cache: 12h
+            feeds:
+              - url: https://cvefeed.io/rssfeed/latest.xml
+                title: cvefeed.io
+                limit: 25

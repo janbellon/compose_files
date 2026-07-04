@@ -1,0 +1,8 @@
+include: 
+  - ../../../base/glance/compose.yml
+
+services:
+  glance:
+    volumes:
+      - ./config.yml:/app/config
+      - ./assets:/app/assets

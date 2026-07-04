@@ -1,0 +1,15 @@
+include: 
+  - ../../../base/glance/compose.yml
+
+services:
+  glance:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://glance:8080"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    volumes:
+      - ./config.yml:/app/config
+      - ./assets:/app/assets
+    env_file:
+      - path: override.env
+        required: true
