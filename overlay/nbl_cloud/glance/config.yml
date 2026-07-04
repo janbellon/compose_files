@@ -52,7 +52,6 @@ pages:
 
       - size: full
         widgets:
-
           - type: group
             title: Vidéos
             widgets:
@@ -112,18 +111,6 @@ pages:
                   - url: https://hnrss.org/newest?q=vulnerability
                     title: hackernews.vulnerability
                     limit: 10
-
-              - type: reddit
-                title: r/news
-                subreddit: news
-                show-thumbnails: true
-                sort-by: new
-
-              - type: reddit
-                title: r/worldnews
-                subreddit: worldnews
-                show-thumbnails: true
-                sort-by: new
 
       - size: small
         widgets:
