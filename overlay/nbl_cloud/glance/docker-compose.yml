@@ -13,3 +13,9 @@ services:
     env_file:
       - path: override.env
         required: true
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true
