@@ -1,0 +1,7 @@
+include:
+  - ../../../base/slash/compose.yml
+
+services:
+  slash:
+    ports:
+      - 5231:5231

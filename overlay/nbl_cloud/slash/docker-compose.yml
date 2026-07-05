@@ -1,0 +1,16 @@
+include:
+  - ../../../base/slash/compose.yml
+
+services:
+  slash:
+    labels:
+      caddy: links.nobell.fr
+      caddy.reverse_proxy: "http://slash:5231"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true
