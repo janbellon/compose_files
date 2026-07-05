@@ -3,7 +3,7 @@ services:
     image: yourselfhosted/slash:latest
     container_name: slash
     volumes:
-      slash_data:/var/opt/slash
+      - slash_data:/var/opt/slash
 
 volumes:
   slash:
