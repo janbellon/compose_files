@@ -6,4 +6,4 @@ services:
       - slash_data:/var/opt/slash
 
 volumes:
-  slash:
+  slash_data:
