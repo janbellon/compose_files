@@ -1,0 +1,45 @@
+services:
+  sure:
+    image: ghcr.io/we-promise/sure:latest
+    container_name: sure
+    restart: unless-stopped
+    networks:
+      - sure
+    env_file:
+      - path: default.env
+        required: true
+    volumes:
+      - sure_data:/rails/storage
+
+  sure_db:
+    image: postgres:18
+    container_name: sure_db
+    restart: unless-stopped
+    command: ["postgres", "-c", "log_destination=jsonlog", "-c", "logging_collector=on", "-c", "log_min_duration_statement=100", "-c", "log_connections=on", "-c", "log_disconnections=on"]
+    networks:
+      - sure
+    env_file:
+      - path: default.env
+        required: true
+    volumes:
+      - sure_db:/var/lib/postgresql
+
+  sure_redis:
+    image: redis:8.8.0
+    container_name: sure_redis
+    restart: unless-stopped
+    networks:
+      - sure
+    volumes:
+      - sure_redis:/data
+
+networks:
+  sure:
+
+volumes:
+  sure_data:
+    driver: local
+  sure_db:
+    driver: local
+  sure_redis:
+    driver: local

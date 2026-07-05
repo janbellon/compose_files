@@ -1,0 +1,15 @@
+include:
+  - ../../../base/sure/compose.yml
+
+services:
+  sure:
+    env_file:
+      - path: override.env
+        required: true
+    ports:
+      - 3000:3000
+
+  sure_db:
+    env_file:
+      - path: override.env
+        required: true
