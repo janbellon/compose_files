@@ -1,0 +1,20 @@
+include:
+  - ../../../base/firefly-iii/compose.yml
+
+services:
+  firefly:
+    ports:
+      - 8080:8080
+    env_file:
+      - path: override.env
+        required: true
+
+  firefly_db:
+    env_file:
+      - path: override.env
+        required: true
+
+  firefly_cron:
+    env_file:
+      - path: override.env
+        required: true

@@ -1,0 +1,52 @@
+include:
+  - ../../../base/firefly-iii/compose.yml
+
+services:
+  firefly:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://firefly:8080"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    networks:
+      - caddy
+    environment:
+      APP_URL: "https://${DOMAIN}"
+    env_file:
+      - path: override.env
+        required: true
+
+  firefly_db:
+    env_file:
+      - path: override.env
+        required: true
+
+  firefly_cron:
+    env_file:
+      - path: override.env
+        required: true
+
+  firefly_importer:
+    labels:
+      caddy: ${IMPORTER_DOMAIN}
+      caddy.reverse_proxy: "http://firefly_importer:8080"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    image: fireflyiii/data-importer:latest
+    container_name: firefly_importer
+    restart: unless-stopped
+    networks:
+      - firefly
+      - caddy
+    depends_on:
+      - firefly
+    volumes:
+      - ./priv_enable_banking.pem:/config/enable_banking.pem:ro
+      - ./priv_firefly_token.txt:/config/firefly_token.txt:ro
+    environment:
+      APP_URL: "https://${IMPORTER_DOMAIN}"
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true

@@ -1,0 +1,51 @@
+services:
+  firefly:
+    image: fireflyiii/core:latest
+    container_name: firefly
+    restart: unless-stopped
+    volumes:
+      - firefly_upload:/vr/www/html/storage/upload
+    env_file:
+      - path: default.env
+        required: true
+    networks:
+      - firefly
+    depends_on:
+      - firefly_db
+
+  firefly_db:
+    image: mariadb:lts
+    container_name: firefly_db
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true
+    networks:
+      - firefly
+    volumes:
+      - firefly_db:/var/lib/mysql
+
+  firefly_cron:
+    image: alpine
+    restart: always
+    container_name: firefly_cron
+    env_file:
+      - path: default.env
+        required: true
+    command: ["sh", "-c", "apk add tzdata && \
+      (ln -s /usr/share/zoneinfo/$$TZ /etc/localtime || true) && \
+      echo \"0 3 * * * wget -qO- http://firefly:8080/api/v1/cron/$$STATIC_CRON_TOKEN;echo\" \
+      | crontab - && \
+      crond -f -L /dev/stdout"]
+    networks:
+      - firefly
+    depends_on:
+      - firefly
+
+volumes:
+  firefly_upload:
+  firefly_db:
+
+networks:
+  firefly:
+    driver: bridge
