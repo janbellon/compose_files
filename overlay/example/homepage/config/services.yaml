@@ -1,0 +1,11 @@
+---
+Apps:
+  - Youtube:
+    icon: youtube.png
+    href: https://youtube.com
+    description: youtube.com
+
+  - Reddit:
+    icon: reddit.png
+    href: https://reddit.com
+    description: reddit.com

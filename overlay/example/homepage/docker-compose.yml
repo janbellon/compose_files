@@ -1,0 +1,12 @@
+include:
+  - ../../../base/homepage/compose.yml
+
+services:
+  homepage:
+    ports:
+      - 3000:3000
+    env_file:
+      - path: override.env
+        required: true
+    volumes:
+      - ./config:/app/config

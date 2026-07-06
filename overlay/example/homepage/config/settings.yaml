@@ -1,0 +1,15 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/settings/
+
+theme: dark
+color: slate
+language: en
+
+iconStyle: theme
+useEqualHeights: true
+layout:
+  Apps:
+    style: tow
+    columns: 3
+    icon: mdi-apps

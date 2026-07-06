@@ -1,0 +1,21 @@
+include:
+  - ../../../base/homepage/compose.yml
+
+services:
+  homepage:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://homepage:3000"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+      caddy.basic_auth: "/*"
+      caddy.basic_auth.jan: "${BASIC_HASH}"
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: ${DOMAIN}
+    volumes:
+      - ./priv_config:/app/config
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true
