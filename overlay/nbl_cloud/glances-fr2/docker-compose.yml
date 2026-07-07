@@ -1,0 +1,17 @@
+include:
+  - ../../../base/glances/compose.yml
+
+services:
+  glances:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://glances:61208"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+      caddy.basic_auth: "/*"
+      caddy.basic_auth.jan: "${BASIC_HASH}"
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true

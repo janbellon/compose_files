@@ -1,0 +1,7 @@
+include:
+  - ../../../base/glances/compose.yml
+
+services:
+  glances:
+    ports:
+      - 61208:61208
