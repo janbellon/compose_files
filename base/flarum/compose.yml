@@ -25,6 +25,9 @@ services:
     volumes:
       - flarum_db:/var/lib/mysql
 
+networks:
+  flarum:
+
 volumes:
   flarum_data:
   flarum_opt:
