@@ -1,0 +1,38 @@
+include:
+  - ../../../base/zitadel/compose.yml
+
+services:
+  zitadel:
+    labels:
+      caddy: auth.nobell.fr
+
+      caddy.handle_0: /*
+      caddy.handle_0.reverse_proxy: "http://zitadel:8080"
+
+      caddy.handle_1: /ui/v2/login/*
+      caddy.handle_1.reverse_proxy: "http://zitadel_login:3000"
+
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+    env_file:
+      - path: override.env
+        required: true
+    volumes:
+      - ./config.yaml:/zitadel/config.yaml
+    networks:
+      - caddy
+
+  zitadel_login:
+    env_file:
+      - path: override.env
+        required: true
+    networks:
+      - caddy
+
+  zitadel_db:
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true

@@ -1,0 +1,18 @@
+Log:
+  Level: info
+
+ExternalDomain: auth.example.com
+ExternalPort: 443
+ExternalSecure: true
+
+TLS:
+  Enabled: false
+
+Database:
+  postgres:
+    Host: postgres
+    Port: 5432
+    Database: zitadel
+    MaxOpenConns: 20
+    MaxIdleConns: 10
+    MaxConnLifetime: 30m

@@ -1,0 +1,58 @@
+services:
+  zitadel:
+    image: ghcr.io/zitadel/zitadel:v4.15.3
+    container_name: zitadel
+    restart: unless-stopped
+    user: "0"
+    command: >
+      start-from-init
+      --masterkeyFromEnv
+      --tlsMode disabled
+      --config /zitadel/config.yaml
+    env_file:
+      - path: default.env
+        required: true
+    healthcheck:
+      test:
+        - CMD
+        - /app/zitadel
+        - ready
+    volumes:
+      - zitadel_bootstrap:/zitadel/bootstrap:rw
+    networks:
+      - zitadel
+    depends_on:
+      - zitadel_db
+
+  zitadel_login:
+    image: ghcr.io/zitadel/zitadel-login:v4.15.3
+    container_name: zitadel_login
+    restart: unless-stopped
+    volumes:
+      - zitadel_bootstrap:/zitadel/bootstrap:ro
+    env_file:
+      - path: default.env
+        required: true
+    networks:
+      - zitadel
+    depends_on:
+      - zitadel
+
+  zitadel_db:
+    image: postgres:18
+    restart: unless-stopped
+    container_name: zitadel_db
+    env_file:
+      - path: default.env
+        required: true
+    volumes:
+      - zitadel_db:/var/lib/postgresql:rw
+    networks:
+      - zitadel
+
+networks:
+  zitadel:
+
+volumes:
+  zitadel_bootstrap:
+  zitadel_db:

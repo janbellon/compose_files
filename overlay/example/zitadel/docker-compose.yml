@@ -1,0 +1,24 @@
+include:
+  - ../../../base/zitadel/compose.yml
+
+services:
+  zitadel:
+    env_file:
+      - path: override.env
+        required: true
+    volumes:
+      - ./config.yaml:/zitadel/config.yaml
+    ports:
+      - 8080:8080
+
+  zitadel_login:
+    env_file:
+      - path: override.env
+        required: true
+    ports:
+      - 3000:3000
+
+  zitadel_db:
+    env_file:
+      - path: override.env
+        required: true
