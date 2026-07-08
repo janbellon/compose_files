@@ -1,0 +1,11 @@
+include:
+  - ../../../base/obsidian/compose.yml
+
+services:
+  obsidian:
+    ports:
+      - 3000:3000
+      - 3001:3001
+    env_file:
+      - path: override.env
+        required: true

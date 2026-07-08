@@ -1,0 +1,17 @@
+services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:1.12.7
+    container_name: obsidian
+    restart: unless-stopped
+    volumes:
+      - obsidian_data:/config
+    environment:
+      PUID: 1000
+      PGID: 1000
+    env_file:
+      - path: default.env
+        required: true
+    shm_size: "1gb"
+
+volumes:
+  obsidian_data:

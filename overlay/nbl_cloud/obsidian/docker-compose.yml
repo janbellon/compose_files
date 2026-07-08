@@ -1,0 +1,21 @@
+include:
+  - ../../../base/obsidian/compose.yml
+
+services:
+  obsidian:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "https://obsidian:3001"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+      caddy.reverse_proxy.transport: http
+      caddy.reverse_proxy.transport.tls_insecure_skip_verify:
+      caddy.basic_auth.jan: "${BASIC_HASH}"
+    networks:
+      - caddy
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true
