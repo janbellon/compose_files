@@ -1,0 +1,34 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:19.1.2-ce0
+    container_name: gitlab
+    restart: unkess-stopped
+    volumes:
+      - gitlab_data:/var/opt/gitlab
+      - /usr/local/share/ca-certificates:/etc/gitlab/trusted-certs
+    shm_time: 256m
+    env_file:
+      - path: default.env
+        required: true
+    networks:
+      - gitlab
+
+  gitlab_db:
+    image: postgres:18
+    container_name: gitlab_db
+    restart: unless-stopped
+    command: ["postgres", "-c", "log_destination=jsonlog", "-c", "logging_collector=on", "-c", "log_min_duration_statement=100", "-c", "log_connections=on", "-c", "log_disconnections=on"]
+    networks:
+      - gitlab
+    env_file: 
+      - path: default.env
+        required: true
+    volumes:
+      - gitlab_db:/var/lib/postgresql
+
+volumes:
+  gitlab_db:
+  gitlab_data:
+
+networks:
+  gitlab:

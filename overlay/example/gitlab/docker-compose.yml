@@ -1,0 +1,12 @@
+include:
+  - ../../../base/gitlab/compose.yml
+
+services:
+  gitlab:
+    hostname: gitlab.example.com
+    env_file:
+      - path: override.env
+        required: true
+    volumes:
+      - ./ssl:/etc/gitlab/ssl
+      - ./gitlab.rb:/etc/gitlab/gitlab.rb
