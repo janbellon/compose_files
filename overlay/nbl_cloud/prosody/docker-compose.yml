@@ -1,0 +1,11 @@
+include:
+  - ../../../base/prosody/compose.yml
+
+services:
+  prosody:
+    ports:
+      - 5280:5280
+      - 5281:5281
+    volumes:
+      - ./prosody.cfg.lua:/etc/prosody/prosody.cfg.lua
+      - ./priv_certs:/etc/prosody/certs

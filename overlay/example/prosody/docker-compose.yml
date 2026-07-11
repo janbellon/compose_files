@@ -1,0 +1,7 @@
+include:
+  - ../../../base/prosody/compose.yml
+
+services:
+  prosody:
+    volumes:
+      - ./prosody.cfg.lua:/etc/prosody/prosody.cfg.lua
