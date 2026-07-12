@@ -2,3 +2,4 @@ services:
   glance:
     image: glanceapp/glance:latest
     container_name: glance
+    restart: unless-stopped
