@@ -7,5 +7,5 @@ services:
       - 5280:5280
       - 5281:5281
     volumes:
-      - ./prosody.cfg.lua:/etc/prosody/prosody.cfg.lua
+      - ./prosody.cfg.lua:/etc/prosody/priv_prosody.cfg.lua
       - ./priv_certs:/etc/prosody/certs
