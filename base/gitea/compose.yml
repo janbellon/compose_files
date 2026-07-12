@@ -1,0 +1,37 @@
+services:
+  gitea:
+    image: gitea/gitea:1.26.4
+    container_name: gitea
+    restart: unless-stopped
+    env_file: 
+      - path: default.env
+        required: true
+    environment:
+      GITEA__log__ACCESS_LOG_TEMPLATE: >-
+        {"remote_addr":"{{.Ctx.RemoteHost}}","time":"{{.Start.Format "2006-01-02T15:04:05Z07:00"}}","method":"{{.Ctx.Req.Method}}","request_uri":"{{.Ctx.Req.URL.RequestURI}}","proto":"{{.Ctx.Req.Proto}}","status":{{.ResponseWriter.Status}},"bytes_sent":{{.ResponseWriter.Size}},"referer":"{{.Ctx.Req.Referer}}","user_agent":"{{.Ctx.Req.UserAgent}}"}
+    networks:
+      - gitea
+    depends_on:
+      - gitea_db
+    volumes:
+      - gitea_data:/data
+
+  gitea_db:
+    image: postgres:17
+    container_name: gitea_db
+    restart: unless-stopped
+    command: ["postgres", "-c", "log_destination=jsonlog", "-c", "logging_collector=on", "-c", "log_min_duration_statement=100", "-c", "log_connections=on", "-c", "log_disconnections=on"]
+    env_file:
+      - path: default.env
+        required: true
+    networks:
+      - gitea
+    volumes:
+      - gitea_db:/var/lib/postgresql
+
+networks:
+  gitea:
+
+volumes:
+  gitea_data:
+  gitea_db:

@@ -1,0 +1,23 @@
+include:
+  - ../../../base/gitea/compose.yml
+
+services:
+  gitea:
+    labels:
+      caddy: gitea.nobell.fr
+      caddy.reverse_proxy: "http://gitea:3000"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+    networks:
+      - caddy
+    env_file:
+      - path: override.env
+        required: true
+
+  gitea_db:
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true

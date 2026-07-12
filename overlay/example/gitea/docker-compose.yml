@@ -1,0 +1,16 @@
+include:
+  - ../../../base/gitea/compose.yml
+
+services:
+  gitea:
+    ports:
+      - 2222:2222
+      - 80:3000
+    env_file:
+      - path: override.env
+        required: true
+
+  gitea_db:
+    env_file:
+      - path: override.env
+        required: true
