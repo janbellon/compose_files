@@ -1,0 +1,27 @@
+include:
+  - ../../../base/mastodon/compose.yml
+
+services:
+  mastodon:
+    env_file:
+      - path: override.env
+        required: true
+    ports:
+      - 3000:3000
+
+  mastodon_streaming:
+    env_file:
+      - path: override.env
+        required: true
+    ports:
+      - 4000:4000
+
+  mastodon_sidekiq:
+    env_file:
+      - path: override.env
+        required: true
+
+  mastodon_db:
+    env_file:
+      - path: override.env
+        required: true

@@ -1,0 +1,18 @@
+include:
+  - ../../../base/gotosocial/compose.yml
+
+services:
+  gotosocial:
+    labels:
+      caddy: gts.nobell.fr
+      caddy.reverse_proxy: "http://gotosocial:8080"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+    env_file:
+      - path: override.env
+        required: true
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true

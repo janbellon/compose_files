@@ -1,0 +1,79 @@
+services:
+  mastodon:
+    image: ghcr.io/mastodon/mastodon:v4.6.3
+    container_name: mastodon
+    restart: unless-stopped
+    command: bundle exec puma -C config/puma.rb
+    networks:
+      - mastodon
+    env_file:
+      - path: default.env
+        required: true
+    depends_on:
+      - mastodon_db
+      - mastodon_redis
+    volumes:
+      - mastodon_data:/mastodon/public/system
+
+  mastodon_streaming:
+    image: ghcr.io/mastodon/mastodon-streaming:v4.6.3
+    container_name: mastodon_streaming
+    restart: unless-stopped
+    command: node ./streaming/index.js
+    networks:
+      - mastodon
+    env_file:
+      - path: default.env
+        required: true
+    depends_on:
+      - mastodon_db
+      - mastodon_redis
+
+  mastodon_sidekiq:
+    image: ghcr.io/mastodon/mastodon:v4.6.3
+    container_name: mastodon_sidekiq
+    restart: unless-stopped
+    command: bundle exec sidekiq
+    networks:
+      - mastodon
+    env_file:
+      - path: default.env
+        required: true
+    depends_on:
+      - mastodon_db
+      - mastodon_redis
+    volumes:
+      - mastodon_sidekiq:/mastodon/public/system
+
+  mastodon_db:
+    image: postgres:18
+    container_name: mastodon_db
+    restart: unless-stopped
+    command: ["postgres", "-c", "log_destination=jsonlog", "-c", "logging_collector=on", "-c", "log_min_duration_statement=100", "-c", "log_connections=on", "-c", "log_disconnections=on"]
+    networks:
+      - mastodon
+    env_file:
+      - path: default.env
+        required: true
+    volumes:
+      - mastodon_db:/var/lib/postgresql
+    shm_size: 256mb
+
+  mastodon_redis:
+    image: redis:8.8.0
+    container_name: mastodon_redis
+    restart: unless-stopped
+    networks:
+      - mastodon
+    volumes:
+      - mastodon_redis:/data
+
+volumes:
+  mastodon_data:
+  mastodon_db:
+  mastodon_redis:
+  mastodon_sidekiq:
+
+
+networks:
+  mastodon:

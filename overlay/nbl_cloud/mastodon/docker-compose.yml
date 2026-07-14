@@ -1,0 +1,46 @@
+include:
+  - ../../../base/mastodon/compose.yml
+
+services:
+  mastodon:
+    labels:
+      caddy: mastodon.nobell.fr
+      caddy.encode: zstd gzip
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+
+      caddy.@stream.path: /api/v1/streaming /api/v1/streaming/*
+      caddy.handle_0: "@stream"
+      caddy.handle_0.reverse_proxy: mastodon_streaming:4000
+
+      caddy.handle_1:
+      caddy.handle_1.reverse_proxy: mastodon:3000
+    env_file:
+      - path: override.env
+        required: true
+    environment:
+      PORT: 3000
+    networks:
+      - caddy
+
+  mastodon_streaming:
+    env_file:
+      - path: override.env
+        required: true
+    environment:
+      PORT: 4000
+    networks:
+      - caddy
+
+  mastodon_sidekiq:
+    env_file:
+      - path: override.env
+        required: true
+
+  mastodon_db:
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true
