@@ -9,6 +9,5 @@ services:
         required: true
     volumes:
       - gotosocial_data:/gotosocial/storage
-
 volumes:
   gotosocial_data:

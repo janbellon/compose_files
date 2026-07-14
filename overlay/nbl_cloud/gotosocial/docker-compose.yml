@@ -12,7 +12,25 @@ services:
         required: true
     networks:
       - caddy
+  gotosocial_elk:
+    labels:
+      caddy: social.nobell.fr
+      caddy.reverse_proxy: "http://gotosocial_elk:5314"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+    container_name: gotosocial_elk
+    restart: unless-stopped
+    image: ghcr.io/elk-zone/elk:v1.0.0
+    environment:
+      NUXT_PUBLIC_DEFAULT_SERVER: gts.nobell.fr
+      NITRO_LOG_LEVEL: "debug"
+    volumes:
+      - gotosocial_elk:/elk/data
+    networks:
+      - caddy
 
 networks:
   caddy:
     external: true
+
+volumes:
+  gotosocial_elk:
