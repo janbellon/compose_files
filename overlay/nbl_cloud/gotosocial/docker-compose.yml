@@ -4,9 +4,12 @@ include:
 services:
   gotosocial:
     labels:
-      caddy: gts.nobell.fr
-      caddy.reverse_proxy: "http://gotosocial:8080"
-      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+      caddy_0: nbl.sh
+      caddy_0.reverse_proxy: "http://gotosocial:8080"
+      caddy_0.tls: /certs/nbl.sh/fullchain.pem /certs/nbl.sh/privkey.pem
+      caddy_1: gts.nobell.fr
+      caddy_1.reverse_proxy: "http://gotosocial:8080"
+      caddy_1.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
     env_file:
       - path: override.env
         required: true
@@ -21,7 +24,7 @@ services:
     restart: unless-stopped
     image: ghcr.io/elk-zone/elk:v1.0.0
     environment:
-      NUXT_PUBLIC_DEFAULT_SERVER: gts.nobell.fr
+      NUXT_PUBLIC_DEFAULT_SERVER: nobell.fr
       NITRO_LOG_LEVEL: "debug"
     volumes:
       - gotosocial_elk:/elk/data

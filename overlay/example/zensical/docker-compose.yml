@@ -1,0 +1,9 @@
+include:
+  - ../../../base/zensical/compose.yml
+
+services:
+  zensical:
+    volumes:
+      - ./zensical.toml:/zensical.toml
+    ports:
+      - 8000:8000

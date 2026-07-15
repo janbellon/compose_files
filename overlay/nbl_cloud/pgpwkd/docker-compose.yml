@@ -1,0 +1,17 @@
+services:
+  pgpwkd:
+    labels:
+      caddy: openpgpkey.nobell.fr
+      caddy.reverse_proxy: "http://pgpwkd"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+    image: nginx:alpine
+    container_name: pgpwkd
+    restart: unless-stopped
+    volumes:
+      - ./priv_data:/usr/share/nginx/html:ro
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true

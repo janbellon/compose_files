@@ -1,0 +1,10 @@
+services:
+  zensical:
+    image: zensical/zensical
+    container_name: zensical
+    restart: unless-stopped
+    volumes:
+      - zensical_data:/docs
+
+volumes:
+  zensical_data:

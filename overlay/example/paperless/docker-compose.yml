@@ -1,0 +1,18 @@
+include:
+  - ../../../base/paperless/compose.yml
+
+services:
+  paperless:
+    env_file:
+      - path: override.env
+        required: true
+    ports:
+      - 8000:8000
+  paperless_db:
+    env_file:
+      - path: override.env
+        required: true
+  paperless_redis:
+    env_file:
+      - path: override.env
+        required: true

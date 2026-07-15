@@ -1,0 +1,44 @@
+services:
+  paperless:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless
+    restart: unless-stopped
+    networks:
+      - paperless
+    depends_on:
+      - paperless_db
+      - paperless_redis
+    volumes:
+      - paperless_data:/usr/src/paperless
+    env_file:
+      - path: default.env
+        required: true
+
+  paperless_db:
+    image: postgres:18
+    container_name: paperless_db
+    restart: unless-stopped
+    networks:
+      - paperless
+    volumes:
+      - paperless_db:/var/lib/postgresql
+    env_file:
+      - path: default.env
+        required: true
+
+  paperless_redis:
+    image: redis:8
+    container_name: paperless_redis
+    restart: unless-stopped
+    networks:
+      - paperless
+    volumes:
+      - paperless_redis:/data
+
+volumes:
+  paperless_data:
+  paperless_db:
+  paperless_redis:
+
+networks:
+  paperless:

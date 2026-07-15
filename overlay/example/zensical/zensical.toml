@@ -1,0 +1,7 @@
+[project]
+site_name = "Zensical example deployement"
+site_url = "http://docs.example.com:8080"
+site_description = "This is a description"
+site_author = "Joe Dohn"
+copyright = "&copy; 2026 Joe Dohn"
+docs_dir = "docs"
