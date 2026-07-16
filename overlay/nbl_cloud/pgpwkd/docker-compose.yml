@@ -9,6 +9,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./priv_data:/usr/share/nginx/html:ro
+      - ./site.conf:/etc/nginx/conf.d/site.conf:ro
     networks:
       - caddy
 

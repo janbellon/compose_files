@@ -1,0 +1,29 @@
+include:
+  - ../../../base/paperless/compose.yml
+
+services:
+  paperless:
+    container_name: paperless_enpos
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://paperless_enpos:8000"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    env_file:
+      - path: override.env
+        required: true
+    networks:
+      - caddy
+  paperless_db:
+    container_name: paperless_enpos_db
+    env_file:
+      - path: override.env
+        required: true
+  paperless_redis:
+    container_name: paperless_enpos_redis
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true
