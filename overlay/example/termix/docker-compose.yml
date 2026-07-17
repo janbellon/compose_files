@@ -1,0 +1,7 @@
+include:
+  - ../../../base/termix/compose.yml
+
+services:
+  termix:
+    ports:
+      - 8080:8080

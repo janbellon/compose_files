@@ -1,0 +1,28 @@
+services:
+  termix:
+    image: ghcr.io/lukegus/termix:latest
+    container_name: termix
+    restart: unless-stopped
+    environment:
+      PORT: 8080
+    volumes:
+      - termix_data:/app/data
+    depends_on:
+      - termix_guacd
+    networks:
+      - termix
+
+  termix_guacd:
+    image: guacamole/guacd:1.6.0
+    container_name: termix_guacd
+    restart: unless-stopped
+    networks:
+      - termix
+
+volumes:
+  termix_data:
+    driver: local
+
+networks:
+  termix:
+    driver: bridge
