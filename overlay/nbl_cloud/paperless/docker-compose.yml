@@ -3,9 +3,10 @@ include:
 
 services:
   paperless:
+    container_name: paperless_nobell
     labels:
       caddy: ${DOMAIN}
-      caddy.reverse_proxy: "http://paperless:8000"
+      caddy.reverse_proxy: "http://paperless_nobell:8000"
       caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
     env_file:
       - path: override.env
