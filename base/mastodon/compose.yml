@@ -43,7 +43,7 @@ services:
       - mastodon_db
       - mastodon_redis
     volumes:
-      - mastodon_sidekiq:/mastodon/public/system
+      - mastodon_data:/mastodon/public/system
 
   mastodon_db:
     image: postgres:18
@@ -72,7 +72,6 @@ volumes:
   mastodon_data:
   mastodon_db:
   mastodon_redis:
-  mastodon_sidekiq:
 
 
 networks:
