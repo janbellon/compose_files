@@ -30,7 +30,7 @@ services:
       caddy: ${IMPORTER_DOMAIN}
       caddy.reverse_proxy: "http://firefly_importer:8080"
       caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
-    image: fireflyiii/data-importer:latest
+    image: fireflyiii/data-importer:version-2.3.4
     container_name: firefly_importer
     restart: unless-stopped
     networks:

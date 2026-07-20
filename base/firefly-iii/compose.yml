@@ -1,6 +1,6 @@
 services:
   firefly:
-    image: fireflyiii/core:latest
+    image: fireflyiii/core:version-6.6.6
     container_name: firefly
     restart: unless-stopped
     volumes:
@@ -14,7 +14,7 @@ services:
       - firefly_db
 
   firefly_db:
-    image: mariadb:lts
+    image: mariadb:13.0.1-rc
     container_name: firefly_db
     restart: unless-stopped
     env_file:
@@ -26,7 +26,7 @@ services:
       - firefly_db:/var/lib/mysql
 
   firefly_cron:
-    image: alpine
+    image: alpine:3.23.5
     restart: always
     container_name: firefly_cron
     env_file:

@@ -1,6 +1,6 @@
 services:
   searxng:
-    image: searxng/searxng:latest
+    image: searxng/searxng:2026.7.19-6da6eee26
     container_name: searxng
     restart: unless-stopped
     networks:
