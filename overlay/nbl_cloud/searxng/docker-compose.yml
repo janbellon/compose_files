@@ -1,0 +1,20 @@
+include:
+  - ../../../base/searxng/compose.yml
+
+services:
+  searxng:
+    labels:
+      caddy: search.nobell.fr
+      caddy.reverse_proxy: "http://searxng:8080"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+    env_file:
+      - path: override.env
+        required: true
+    volumes:
+      - ./priv_core-config:/etc/searxng/:Z 
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true

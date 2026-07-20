@@ -1,0 +1,12 @@
+include:
+  - ../../../base/searxng/compose.yml
+
+services:
+  searxng:
+    env_file:
+      - path: override.env
+        required: true
+    ports:
+      - 8080:8080
+    volumes:
+      - ./core-config:/etc/searxng/:Z 
