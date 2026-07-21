@@ -17,7 +17,7 @@ services:
       - gitea_data:/data
 
   gitea_db:
-    image: postgres:17
+    image: postgres:18
     container_name: gitea_db
     restart: unless-stopped
     command: ["postgres", "-c", "log_destination=jsonlog", "-c", "logging_collector=on", "-c", "log_min_duration_statement=100", "-c", "log_connections=on", "-c", "log_disconnections=on"]
