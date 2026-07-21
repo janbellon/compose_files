@@ -1,0 +1,8 @@
+services:
+  mkdocs:
+    container_name: mkdocs
+    image: polinux/mkdocs:1.5.2
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true

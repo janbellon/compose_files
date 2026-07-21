@@ -1,0 +1,15 @@
+services:
+  vikunja:
+    image: vikunja/vikunja
+    container_name: vikunja
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true
+    volumes:
+      - vikunja_data:/app/vikunja/files
+      - vikunja_db:/db
+
+volumes:
+  vikunja_data:
+  vikunja_db:

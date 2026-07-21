@@ -1,0 +1,18 @@
+include:
+  - ../../../base/vikunja/compose.yml
+
+services:
+  vikunja:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://vikunja:3456"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    env_file:
+      - path: override.env
+        required: true
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true

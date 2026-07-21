@@ -1,0 +1,9 @@
+include:
+  - ../../../base/mkdocs/compose.yml
+
+services:
+  mkdocs:
+    ports:
+      - 8000:8000
+    volumes:
+      - ./mkdocs:/mkdocs:ro

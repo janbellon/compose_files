@@ -1,0 +1,21 @@
+site_name: Example documentation
+site_url: https://docs.example.com
+nav:
+  - Part1:
+    - Subpart1: subpart1.md
+  - Part2: part2.md
+    
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - tables
+
+theme:
+  name: readthedocs
+  highlightjs: true
+  hljs_languages:
+    - yaml
+    - bash
+    - sql
+    - python

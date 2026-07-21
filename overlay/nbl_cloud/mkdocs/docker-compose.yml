@@ -1,0 +1,20 @@
+include:
+  - ../../../base/mkdocs/compose.yml
+
+services:
+  mkdocs:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://mkdocs_infra:8000"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+      caddy.basic_auth: "/*"
+      caddy.basic_auth.jan: "${BASIC_HASH}"
+    container_name: mkdocs_infra
+    volumes:
+      - ./priv_mkdocs:/mkdocs:ro
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true
