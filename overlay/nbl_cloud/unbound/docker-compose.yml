@@ -1,0 +1,10 @@
+include:
+  - ../../../base/unbound/compose.yml
+
+services:
+  unbound:
+    volumes:
+      - ./config:/opt/unbound/etc/unbound
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
