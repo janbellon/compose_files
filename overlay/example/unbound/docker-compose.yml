@@ -5,6 +5,8 @@ services:
   unbound:
     volumes:
       - ./config:/opt/unbound/etc/unbound
+      - /etc/ssl/example.com:/etc/ssl/example.com:ro
     ports:
       - "53:53/udp"
       - "53:53/tcp"
+      - "853:853/tcp"

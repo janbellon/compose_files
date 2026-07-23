@@ -5,6 +5,8 @@ services:
   unbound:
     volumes:
       - ./priv_config:/opt/unbound/etc/unbound
+      - /etc/ssl/nobell.fr:/etc/ssl/nobell.fr:ro
     ports:
       - "53:53/udp"
       - "53:53/tcp"
+      - "853:853/tcp"
