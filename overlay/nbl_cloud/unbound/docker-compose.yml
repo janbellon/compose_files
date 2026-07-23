@@ -4,7 +4,7 @@ include:
 services:
   unbound:
     volumes:
-      - ./config:/opt/unbound/etc/unbound
+      - ./priv_config:/opt/unbound/etc/unbound
     ports:
       - "53:53/udp"
       - "53:53/tcp"
