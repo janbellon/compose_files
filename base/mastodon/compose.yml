@@ -60,7 +60,7 @@ services:
     shm_size: 256mb
 
   mastodon_redis:
-    image: redis:8.8.0
+    image: redis:8.8.1
     container_name: mastodon_redis
     restart: unless-stopped
     networks:
