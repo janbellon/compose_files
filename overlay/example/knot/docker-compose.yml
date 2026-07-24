@@ -1,0 +1,9 @@
+include:
+  - ../../../base/knot/compose.yml
+
+services:
+  knot:
+    volumes:
+      - ./knot.conf:/config/knot.conf
+      - ./zones:/zones
+    network_mode: host

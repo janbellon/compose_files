@@ -1,0 +1,14 @@
+services:
+  knot:
+    image: cznic/knot:v3.5.6
+    restart: unless-stopped
+    container_name: knot
+    entrypoint: ["/usr/sbin/knotd"]
+    command: ["-v"]
+    volumes:
+      - knot_data:/storage
+      - knot_rundir:/rundir
+
+volumes:
+  knot_data:
+  knot_rundir:
