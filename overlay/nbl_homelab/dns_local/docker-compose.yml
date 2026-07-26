@@ -8,7 +8,8 @@ services:
       - ./priv_knot.conf:/config/knot.conf
       - ./priv_zones:/zones
     networks:
-      - dns
+      dns:
+        ipv4_address: 172.20.0.10
 
   unbound:
     volumes:
@@ -17,7 +18,8 @@ services:
       - "53:53/udp"
       - "53:53/tcp"
     networks:
-      - dns
+      dns:
+        ipv4_address: 172.20.0.11
 
 networks:
   dns:
