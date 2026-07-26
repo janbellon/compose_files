@@ -12,7 +12,7 @@ services:
       - "5300:53/tcp"
     networks:
       dns:
-        ipv4_address: 172.20.53.10
+        ipv4_address: 192.168.53.10
 
   unbound:
     volumes:
@@ -22,12 +22,12 @@ services:
       - "53:53/tcp"
     networks:
       dns:
-        ipv4_address: 172.20.53.11
+        ipv4_address: 192.168.53.11
 
 networks:
   dns:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.20.53.0/24
-          gateway: 172.20.53.1
+        - subnet: 192.168.53.0/24
+          gateway: 192.168.53.1
