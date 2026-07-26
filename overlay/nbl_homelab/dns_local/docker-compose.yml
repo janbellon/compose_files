@@ -7,6 +7,9 @@ services:
     volumes:
       - ./priv_knot.conf:/config/knot.conf
       - ./priv_zones:/zones
+    ports:
+      - "5300:53/udp"
+      - "5300:53/tcp"
     networks:
       dns:
         ipv4_address: 172.20.53.10
