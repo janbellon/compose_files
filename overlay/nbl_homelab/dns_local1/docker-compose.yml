@@ -1,9 +1,23 @@
 include:
   - ../../../base/knot/compose.yml
+  - ../../../base/unbound/compose.yml
 
 services:
   knot:
     volumes:
       - ./priv_knot.conf:/config/knot.conf
       - ./priv_zones:/zones
-    network_mode: host
+    networks:
+      - dns
+
+  unbound:
+    volumes:
+      - ./priv_unbound:/opt/unbound/etc/unbound
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    networks:
+      - dns
+
+networks:
+  dns:
