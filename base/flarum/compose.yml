@@ -1,7 +1,7 @@
 services:
   flarum:
     container_name: flarum
-    image: crazymax/flarum:1.8.10
+    image: crazymax/flarum:1.8.17
     restart: unless-stopped
     networks:
       - flarum
