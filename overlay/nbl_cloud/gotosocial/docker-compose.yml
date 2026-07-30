@@ -22,7 +22,7 @@ services:
       caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
     container_name: gotosocial_elk
     restart: unless-stopped
-    image: ghcr.io/elk-zone/elk:v1.0.0
+    image: ghcr.io/elk-zone/elk:v1.0.1
     environment:
       NUXT_PUBLIC_DEFAULT_SERVER: nobell.fr
       NITRO_LOG_LEVEL: "debug"
