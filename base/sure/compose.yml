@@ -25,7 +25,7 @@ services:
       - sure_db:/var/lib/postgresql
 
   sure_redis:
-    image: redis:8.8.1
+    image: redis:8.10.0
     container_name: sure_redis
     restart: unless-stopped
     networks:
