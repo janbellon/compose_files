@@ -8,8 +8,8 @@ services:
       - ./priv_knot.conf:/config/knot.conf
       - ./priv_zones:/zones
     ports:
-      - "5300:53/udp"
-      - "5300:53/tcp"
+      - "0.0.0.0:5300:53/udp"
+      - "0.0.0.0:5300:53/tcp"
     networks:
       dns:
         ipv4_address: 192.168.53.10
@@ -18,8 +18,8 @@ services:
     volumes:
       - ./priv_unbound:/opt/unbound/etc/unbound
     ports:
-      - "53:53/udp"
-      - "53:53/tcp"
+      - "0.0.0.0:53:53/udp"
+      - "0.0.0.0:53:53/tcp"
     networks:
       dns:
         ipv4_address: 192.168.53.11
