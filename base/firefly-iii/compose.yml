@@ -26,7 +26,7 @@ services:
       - firefly_db:/var/lib/mysql
 
   firefly_cron:
-    image: alpine:3.23.5
+    image: alpine:3.24.1
     restart: always
     container_name: firefly_cron
     env_file:
