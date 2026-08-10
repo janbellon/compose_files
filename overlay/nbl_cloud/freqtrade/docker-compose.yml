@@ -1,0 +1,11 @@
+include:
+  - ../../../base/freqtrade/compose.yml
+
+services:
+  freqtrade:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://freqtrade:8080"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    volumes:
+      - ./priv_user_data:/freqtrade/user_data
