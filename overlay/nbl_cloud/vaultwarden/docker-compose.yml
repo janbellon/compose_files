@@ -1,0 +1,20 @@
+include:
+  - ../../../base/vaultwarden/compose.yml
+
+services:
+  vaultwarden:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+      caddy.reverse_proxy: "http://vaultwarden:80"
+
+    env_file:
+      - path: override.env
+        required: true
+
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true

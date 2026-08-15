@@ -1,0 +1,13 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:1.37.1
+    container_name: vaultwarden
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true
+    volumes:
+      - vw-data:/data
+
+volumes:
+  vw-data:
