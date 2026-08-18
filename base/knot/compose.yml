@@ -1,6 +1,6 @@
 services:
   knot:
-    image: cznic/knot:v3.5.6
+    image: cznic/knot:v3.5.7
     restart: unless-stopped
     container_name: knot
     entrypoint: ["/usr/sbin/knotd"]
