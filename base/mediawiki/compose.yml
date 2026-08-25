@@ -11,7 +11,7 @@ services:
       - mediawiki
 
   mediawiki_db:
-    image: mariadb:12.3.2
+    image: mariadb:12.3.3
     container_name: mediawiki_db
     volumes:
       - mediawiki_db:/var/lib/mysql
