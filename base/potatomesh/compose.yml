@@ -1,0 +1,17 @@
+services:
+  potatomesh:
+    image: ghcr.io/l5yth/potato-mesh-web-linux-amd64:v0.7.5
+    restart: unless-stopped
+    container_name: potatomesh
+    command: ["ruby", "app.rb", "-p", "41447", "-o", "0.0.0.0"]
+    env_file:
+      - path: default.env
+        required: true
+    volumes:
+      - potatomesh_data:/app/.local/share/potatomesh
+      - /var/log/potatomesh:/app/logs
+      - potatomesh_pages:/app/pages
+
+volumes:
+  potatomesh_data:
+  potatomesh_pages:
