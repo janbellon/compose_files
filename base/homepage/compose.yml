@@ -1,6 +1,6 @@
 services:
   homepage:
-    image: gethomepage/homepage:v2.1.2
+    image: gethomepage/homepage:v2.2.0
     container_name: homepage
     restart: unless-stopped
     env_file:
