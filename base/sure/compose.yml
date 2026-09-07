@@ -1,6 +1,6 @@
 services:
   sure:
-    image: ghcr.io/we-promise/sure:0.7.4-alpha.3
+    image: ghcr.io/we-promise/sure:0.7.5-alpha.3
     container_name: sure
     restart: unless-stopped
     networks:
