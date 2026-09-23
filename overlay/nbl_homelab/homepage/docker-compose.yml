@@ -1,0 +1,14 @@
+include:
+  - ../../../base/homepage/compose.yml
+
+services:
+  homepage:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://homepage:3000"
+      caddy.tls: ${CERT_DOMAIN}
+    env_file:
+      - path: override.env
+        required: true
+    volumes:
+      - ./priv_config:/app/config
