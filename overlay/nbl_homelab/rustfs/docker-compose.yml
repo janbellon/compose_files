@@ -1,0 +1,31 @@
+include:
+  - ../../../base/rustfs/compose.yml
+
+services:
+  rustfs:
+    labels:
+      caddy_0: ${DOMAIN}
+      caddy_0.reverse_proxy: "http://rustfs:9000"
+      caddy_0.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+      caddy_1: ${CONSOLE_DOMAIN}
+      caddy_1.reverse_proxy: "http://rustfs:9001"
+      caddy_1.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+   
+    env_file:
+      - path: override.env
+        required: true
+
+    networks:
+      - caddy
+
+    volumes:
+      - /mnt/rustfs/data:/data
+      - /mnt/rustfs/config:/config
+
+  volume-permission-helper:
+    volumes:
+      - /mnt/rustfs:/data
+
+networks:
+  caddy:
+    external: true

@@ -1,0 +1,20 @@
+include:
+  - ../../../base/rustfs/compose.yml
+
+services:
+  rustfs:
+    ports:
+      - 9000:9000
+      - 9001:9001
+
+    env_file:
+      - path: override.env
+        required: true
+
+    volumes:
+      - /data/rustfs/data:/data
+      - /data/rustfs/config:/config
+
+  volume-permission-helper:
+    volumes:
+      - /data/rustfs:/data
