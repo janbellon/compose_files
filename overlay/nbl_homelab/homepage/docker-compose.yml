@@ -10,5 +10,11 @@ services:
     env_file:
       - path: override.env
         required: true
+    networks:
+      - caddy
     volumes:
       - ./priv_config:/app/config
+      
+networks:
+  caddy:
+    external: true
