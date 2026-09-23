@@ -6,7 +6,7 @@ services:
     labels:
       caddy: ${DOMAIN}
       caddy.reverse_proxy: "http://homepage:3000"
-      caddy.tls: ${CERT_DOMAIN}
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
     env_file:
       - path: override.env
         required: true
