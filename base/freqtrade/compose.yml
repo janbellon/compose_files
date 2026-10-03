@@ -1,5 +1,5 @@
 services:
   freqtrade:
-    image: freqtradeorg/freqtrade:2026.8
+    image: freqtradeorg/freqtrade:2026.9
     restart: unless-stopped
     container_name: freqtrade
