@@ -7,12 +7,11 @@ services:
     volumes:
       - ./priv_knot.conf:/config/knot.conf
       - ./priv_zones:/zones
-    ports:
-      - "0.0.0.0:5300:53/udp"
-      - "0.0.0.0:5300:53/tcp"
     networks:
       dns:
         ipv4_address: 192.168.53.10
+      vnet280:
+        ipv4_address: 10.2.80.2
 
   unbound:
     volumes:
@@ -31,3 +30,5 @@ networks:
       config:
         - subnet: 192.168.53.0/24
           gateway: 192.168.53.1
+  vnet280:
+    external: true
