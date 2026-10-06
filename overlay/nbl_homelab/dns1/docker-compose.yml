@@ -18,8 +18,8 @@ services:
     volumes:
       - ./priv_unbound:/opt/unbound/etc/unbound
     ports:
-      - "0.0.0.0:53:53/udp"
-      - "0.0.0.0:53:53/tcp"
+      - "10.2.1.1:53:53/udp"
+      - "10.2.1.1:53:53/tcp"
     networks:
       dns:
         ipv4_address: 192.168.53.11
