@@ -4,6 +4,7 @@ include:
 
 services:
   knot:
+    command: ["knotd", "-c", "/config/knot.conf"]
     volumes:
       - ./priv_knot.conf:/config/knot.conf
       - ./priv_zones:/zones
