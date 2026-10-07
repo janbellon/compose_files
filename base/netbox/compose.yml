@@ -1,0 +1,106 @@
+services:
+  netbox: &netbox
+    image: netboxcommunity/netbox:v4.7.2
+    container_name: netbox
+    restart: unless-stopped
+    user: "netbox:root"
+    healthcheck:
+      test: /opt/netbox/health.sh
+      start_period: 300s
+      timeout: 10s
+      interval: 30s
+    volumes:
+      - netbox_data:/opt/netbox/netbox:rw
+    env_file: 
+      - path: default.env
+        required: true
+    networks:
+      - netbox
+      - mailserver
+
+  netbox_worker:
+    <<: *netbox
+    container_name: netbox-worker
+    depends_on:
+      netbox:
+        condition: service_healthy
+    command:
+      - /opt/netbox/venv/bin/python
+      - /opt/netbox/netbox/manage.py
+      - rqworker
+    networks:
+      - netbox
+      - mailserver
+    healthcheck:
+      test: ps -aux | grep -v grep | grep -q rqworker || exit 1
+      start_period: 20s
+      timeout: 3s
+      interval: 15s
+
+  netbox_db:
+    container_name: netbox_db
+    image: postgres:18-alpine
+    healthcheck:
+      test: pg_isready -q -t 2 $$POSTGRES_DB -u $$POSTGRES_USER
+      start_period: 20s
+      timeout: 30s
+      interval: 10s
+      retries: 5
+    env_file: 
+      - path: default.env
+        required: true
+    volumes:
+      - netbox_db:/var/lib/postgresql
+    networks:
+      - netbox
+
+  netbox_redis:
+    container_name: netbox-redis
+    image: valkey/valkey:9.1-alpine
+    command:
+      - sh
+      - -c # this is to evaluate the $REDIS_PASSWORD from the env
+      - valkey-server --appendonly no --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
+    volumes:
+      - netbox_redis:/data
+    healthcheck: &redis-healthcheck
+      test: '[ $$(valkey-cli --pass "$${REDIS_PASSWORD}" ping) = ''PONG'' ]'
+      start_period: 5s
+      timeout: 3s
+      interval: 1s
+      retries: 5
+    networks:
+      - netbox
+
+
+  netbox_redis_cache:
+    container_name: netbox-redis-cache
+    image: valkey/valkey:9.1-alpine
+    command:
+      - sh
+      - -c # this is to evaluate the $REDIS_PASSWORD from the env
+      - valkey-server --requirepass $$REDIS_PASSWORD ## $$ because of docker-compose
+    env_file: 
+      - path: default.env
+        required: true
+    volumes:
+      - netbox_redis_cache:/data
+    healthcheck:
+      <<: *redis-healthcheck
+    networks:
+      - netbox
+
+volumes:
+  netbox_db:
+    driver: local
+  netbox_data:
+    driver: local
+  netbox_redis:
+    driver: local
+  netbox_redis_cache:
+    driver: local
+
+networks:
+  netbox:
+  mailserver:
+    external: true

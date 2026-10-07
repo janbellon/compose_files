@@ -1,0 +1,33 @@
+include:
+  - ../../../base/netbox/compose.yml
+
+services:
+  netbox: &netbox
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://netbox:8080"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    env_file:
+      - path: override.env
+        required: true
+    volumes:
+      - ./config:/etc/netbox/config:z,ro
+    networks:
+      - caddy
+
+  netbox_worker:
+    <<: *netbox
+
+  netbox_db:
+    env_file:
+      - path: override.env
+        required: true
+  
+  netbox_redis:
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true

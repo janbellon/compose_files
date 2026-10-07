@@ -1,0 +1,23 @@
+include:
+  - ../../../base/netbox/compose.yml
+
+services:
+  netbox: &netbox
+    env_file:
+      - path: override.env
+        required: true
+    volumes:
+      - ./config:/etc/netbox/config:z,ro
+
+  netbox_worker:
+    <<: *netbox
+
+  netbox_db:
+    env_file:
+      - path: override.env
+        required: true
+  
+  netbox_redis:
+    env_file:
+      - path: override.env
+        required: true
