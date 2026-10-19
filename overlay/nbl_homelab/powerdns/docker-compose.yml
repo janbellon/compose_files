@@ -1,0 +1,29 @@
+include:
+  - ../../../base/powerdns/compose.yml
+
+services:
+  powerdns_db:
+    volumes:
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    env_file:
+      - path: override.env
+        required: true
+
+  powerdns:
+    volumes:
+      - ./priv_pdns.conf:/etc/powerdns/pdns.conf:ro
+
+  powerdns_admin:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://powerdns_admin"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    env_file:
+      - path: override.env
+        required: true
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true

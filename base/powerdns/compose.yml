@@ -1,0 +1,43 @@
+services:
+  powerdns_db:
+    image: postgres:16-alpine
+    container_name: powerdns_db
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true
+    volumes:
+      - powerdns_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U powerdns -d powerdns"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - powerdns
+
+  powerdns:
+    image: powerdns/pdns-auth-49:latest
+    container_name: powerdns
+    restart: unless-stopped
+    depends_on:
+      powerdns_db:
+        condition: service_healthy
+    networks:
+      - powerdns
+
+  powerdns_admin:
+    image: powerdnsadmin/pda-legacy:latest
+    container_name: powerdns_admin
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true
+    networks:
+      - powerdns
+
+volumes:
+  powerdns_db:
+
+networks:
+  powerdns:
