@@ -1,0 +1,7 @@
+include:
+  - ../../../base/openbao/compose.yml
+
+services:
+  openbao:
+    ports:
+      - 8200:8200

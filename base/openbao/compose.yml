@@ -1,0 +1,14 @@
+services:
+  openbao:
+    image: openbao/openbao:2.7.1
+    container_name: openbao
+    command: server
+    restart: unless-stopped
+    volumes:
+      - openbao_data:/openbao/file
+    cap_add:
+      - IPC_LOCK
+
+volumes:
+  openbao_data:
+    driver: local

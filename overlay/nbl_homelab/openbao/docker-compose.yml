@@ -1,0 +1,20 @@
+include:
+  - ../../../base/openbao/compose.yml
+
+services:
+  openbao:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://openbao:8200"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    volumes:
+      - ./openbao.hcl:/openbao/config/openbao.hcl
+    networks:
+      - caddy
+    environment:
+      BAO_API_ADDR: "https://${DOMAIN}"
+      BAO_CLUSTER_ADDR: "http://openbao:8201"
+
+networks:
+  caddy:
+    external: true
