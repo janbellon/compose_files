@@ -14,7 +14,8 @@ services:
       timeout: 5s
       retries: 10
     networks:
-      - powerdns
+      powerdns:
+        ipv4_address: 172.23.0.10
 
   powerdns:
     image: powerdns/pdns-auth-49:latest
@@ -24,7 +25,8 @@ services:
       powerdns_db:
         condition: service_healthy
     networks:
-      - powerdns
+      powerdns:
+        ipv4_address: 172.23.0.11
 
   powerdns_admin:
     image: powerdnsadmin/pda-legacy:latest
@@ -34,10 +36,16 @@ services:
       - path: default.env
         required: true
     networks:
-      - powerdns
+      powerdns:
+        ipv4_address: 172.23.0.12
 
 volumes:
   powerdns_db:
 
 networks:
   powerdns:
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24
+          gateway: 172.23.0.1
+          ip_range: 172.23.0.0/24 

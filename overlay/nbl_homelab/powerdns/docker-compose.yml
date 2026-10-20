@@ -10,6 +10,12 @@ services:
         required: true
 
   powerdns:
+    networks:
+      vnet280:
+        ipv4_address: 10.2.80.4
+        ipv6_address: 2001:470:ca40:280::4
+        gw_priority: 100
+    user: root
     volumes:
       - ./priv_pdns.conf:/etc/powerdns/pdns.conf:ro
 
@@ -18,12 +24,15 @@ services:
       caddy: ${DOMAIN}
       caddy.reverse_proxy: "http://powerdns_admin"
       caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
-    env_file:
-      - path: override.env
-        required: true
     networks:
       - caddy
 
+    env_file:
+      - path: override.env
+        required: true
+
 networks:
   caddy:
+    external: true
+  vnet280:
     external: true
