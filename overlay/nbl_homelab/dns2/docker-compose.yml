@@ -13,6 +13,7 @@ services:
         ipv4_address: 192.168.53.10
       vnet280:
         ipv4_address: 10.2.80.3
+        ipv6_address: 2001:470:ca40:280::3
 
   unbound:
     volumes:
