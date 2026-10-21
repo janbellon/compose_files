@@ -1,0 +1,11 @@
+services:
+  uptime_kuma:
+    image: louislam/uptime-kuma:2.5.6
+    container_name: uptime_kuma
+    restart: unless-stopped
+    volumes:
+      - uptime_kuma_data:/app
+
+volumes:
+  uptime_kuma_data:
+    driver: local

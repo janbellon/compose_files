@@ -1,0 +1,21 @@
+include:
+  - ../../../base/uptime-kuma/compose.yml
+
+services:
+  uptime_kuma:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://uptime_kuma:3001"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    networks:
+      caddy: {}
+      vnet80:
+        ipv4_address: 10.0.80.5
+        ipv6_address: 2001:470:ca40:80::5
+        gw_priority: 100
+
+networks:
+  caddy:
+    external: true
+  vnet80:
+    external: true

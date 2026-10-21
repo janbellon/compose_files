@@ -1,0 +1,7 @@
+include:
+  - ../../../base/uptime-kuma/compose.yml
+
+services:
+  uptime_kuma:
+    ports:
+      - "3001:3001"
