@@ -14,6 +14,7 @@ services:
       vnet280:
         ipv4_address: 10.2.80.2
         ipv6_address: 2001:470:ca40:280::2
+        gw_priority: 100
 
   unbound:
     volumes:
