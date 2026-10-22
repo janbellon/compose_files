@@ -6,7 +6,6 @@ services:
     labels:
       caddy_0: nobell.fr
       caddy_0.reverse_proxy: "http://flarum:8000"
-      caddy_0.respond: '"Site under maintenance due to CVE-2026-109618 and CVE-2026-109619" 200'
       caddy_0.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
       caddy_1: "www.nobell.fr forum.nobell.fr"
       caddy_1.redir: "https://nobell.fr/{uri}"
