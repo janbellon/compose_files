@@ -5,6 +5,7 @@ services:
   flarum:
     labels:
       caddy_0: nobell.fr
+#      caddy_0.respond: /* "Offline due to CVE-2026-115560" 200
       caddy_0.reverse_proxy: "http://flarum:8000"
       caddy_0.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
       caddy_1: "www.nobell.fr forum.nobell.fr"
