@@ -1,0 +1,15 @@
+include:
+  - ../../../base/uptime-kuma/compose.yml
+
+services:
+  uptime_kuma:
+    labels:
+      caddy: status.nobell.fr
+      caddy.reverse_proxy: "http://uptime_kuma:3000"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true
