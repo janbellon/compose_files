@@ -7,6 +7,9 @@ services:
       caddy: ${DOMAIN}
       caddy.reverse_proxy: "http://tinyauth:3000"
       caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+      caddy_0: (tinyauth)
+      caddy_0.forward_auth: "tinyauth:3000"
+      caddy_0.forward_auth.uri: /api/auth/caddy
 
     networks:
       - caddy
