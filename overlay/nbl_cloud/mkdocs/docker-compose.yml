@@ -7,7 +7,7 @@ services:
       caddy: ${DOMAIN}
       caddy.reverse_proxy: "http://mkdocs_infra:8000"
       caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
-      caddy.import: "tinyauth"
+      caddy.import: "tinyauth_nbl"
     container_name: mkdocs_infra
     volumes:
       - ./priv_mkdocs:/mkdocs:ro
