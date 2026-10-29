@@ -1,0 +1,19 @@
+include:
+  - ../../../base/tinyauth/compose.yml
+
+services:
+  tinyauth:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "http://tinyauth:3000"
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+
+    networks:
+      - caddy
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true
