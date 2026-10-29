@@ -1,0 +1,8 @@
+services:
+  tinyauth:
+    image: ghcr.io/tinyauthapp/tinyauth:v5.2.0
+    container_name: tinyauth
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true

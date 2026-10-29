@@ -1,0 +1,11 @@
+include:
+  - ../../../base/tinyauth/compose.yml
+
+services:
+  tinyauth:
+    ports:
+      - 3000:3000
+
+    env_file:
+      - path: override.env
+        required: true
