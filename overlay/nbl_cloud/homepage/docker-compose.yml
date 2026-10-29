@@ -7,8 +7,7 @@ services:
       caddy: ${DOMAIN}
       caddy.reverse_proxy: "http://homepage:3000"
       caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
-      caddy.basic_auth: "/*"
-      caddy.basic_auth.jan: "${BASIC_HASH}"
+      caddy.import: tinyauth
     environment:
       HOMEPAGE_ALLOWED_HOSTS: ${DOMAIN}
     volumes:
