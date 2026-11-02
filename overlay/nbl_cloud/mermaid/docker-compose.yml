@@ -1,0 +1,15 @@
+include:
+  - ../../../base/mermaid/compose.yml
+
+services:
+  mermaid:
+    labels:
+      caddy: mermaid.nobell.fr
+      caddy.reverse_proxy: "http://mermaid:8080"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+    networks:
+      - caddy
+
+networks:
+  caddy:
+    external: true
