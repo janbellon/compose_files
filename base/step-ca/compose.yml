@@ -1,0 +1,14 @@
+services:
+  step-ca:
+    image: smallstep/step-ca:0.30.2
+    container_name: step-ca
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true
+    volumes:
+      - step_ca_data:/home/step
+
+volumes:
+  step_ca_data:
+    driver: local

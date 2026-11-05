@@ -1,0 +1,41 @@
+include:
+  - ../../../base/step-ca/compose.yml
+
+services:
+  step-ca:
+    labels:
+      caddy: ${DOMAIN}
+      caddy.reverse_proxy: "https://step-ca:9000"
+      caddy.reverse_proxy.transport: http
+      caddy.reverse_proxy.transport.tls_insecure_skip_verify: ""
+      caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
+    networks:
+      - caddy
+
+    environment:
+      DOCKER_STEPCA_INIT_NAME: "Enpos Internal"
+      DOCKER_STEPCA_INIT_DNS_NAMES: "${DOMAIN},step-ca,localhost"
+      DOCKER_STEPCA_INIT_ROOT_FILE: /tmp/step-ca/root_ca.crt
+      DOCKER_STEPCA_INIT_KEY_FILE: /tmp/step-ca/root_ca_key
+      DOCKER_STEPCA_INIT_KEY_PASSWORD_FILE: /tmp/step-ca/root_ca_key_password
+
+    volumes:
+      - /tmp/step-ca:/tmp/step-ca:ro
+
+    # Refuse to start if the CA is not initialized yet and the root is missing,
+    # otherwise the image would silently generate a brand new root CA
+    entrypoint:
+      - /bin/bash
+      - -c
+      - |
+        if [ ! -f /home/step/config/ca.json ] && { [ ! -f "$$DOCKER_STEPCA_INIT_ROOT_FILE" ] || [ ! -f "$$DOCKER_STEPCA_INIT_KEY_FILE" ]; }; then
+          echo "CA not initialized: place root_ca.crt and root_ca_key in /tmp/step-ca" >&2
+          exit 1
+        fi
+        exec /bin/bash /entrypoint.sh "$$@"
+      - --
+    command: ["/usr/local/bin/step-ca", "--password-file", "/home/step/secrets/password", "/home/step/config/ca.json"]
+
+networks:
+  caddy:
+    external: true

@@ -1,0 +1,7 @@
+include:
+  - ../../../base/step-ca/compose.yml
+
+services:
+  step-ca:
+    ports:
+      - 9000:9000
