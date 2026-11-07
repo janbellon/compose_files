@@ -21,6 +21,7 @@ services:
     volumes:
       - /mnt/rustfs/data:/data
       - /mnt/rustfs/config:/config
+      - /etc/localtime:/etc/localtime:ro
 
   volume-permission-helper:
     volumes:

@@ -8,16 +8,17 @@ services:
       caddy.reverse_proxy: "https://step-ca:9000"
       caddy.reverse_proxy.transport: http
       caddy.reverse_proxy.transport.tls_insecure_skip_verify: ""
+      caddy.reverse_proxy.header_up_0: "Host {host}"
+      caddy.reverse_proxy.header_up_1: "X-Real-IP {remote_host}"
       caddy.tls: /certs/${CERT_DOMAIN}/fullchain.pem /certs/${CERT_DOMAIN}/privkey.pem
     networks:
       - caddy
 
     environment:
       DOCKER_STEPCA_INIT_NAME: "Enpos Internal"
-      DOCKER_STEPCA_INIT_DNS_NAMES: "${DOMAIN},step-ca,localhost"
+      DOCKER_STEPCA_INIT_DNS_NAMES: "${DOMAIN},int.enpos.fr,vil.nbl.sh,enp,nbl"
       DOCKER_STEPCA_INIT_ROOT_FILE: /tmp/step-ca/root_ca.crt
       DOCKER_STEPCA_INIT_KEY_FILE: /tmp/step-ca/root_ca_key
-      DOCKER_STEPCA_INIT_KEY_PASSWORD_FILE: /tmp/step-ca/root_ca_key_password
 
     volumes:
       - /tmp/step-ca:/tmp/step-ca:ro
