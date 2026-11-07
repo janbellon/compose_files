@@ -1,0 +1,23 @@
+include:
+  - ../../../base/myip/compose.yml
+
+services:
+  myip:
+    labels:
+      caddy: myip.nobell.fr
+      caddy.reverse_proxy: "http://myip:18966"
+      caddy.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+
+    networks:
+      - caddy
+
+    volumes:
+      - ./priv_geoip/common/maxmind-db:/app/common/maxmind-db
+
+    env_file:
+      - path: override.env
+        required: true
+
+networks:
+  caddy:
+    external: true

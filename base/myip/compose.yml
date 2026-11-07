@@ -1,0 +1,8 @@
+services:
+  myip:
+    image: ghcr.io/jason5ng32/myip:v8.0.0
+    container_name: myip
+    restart: unless-stopped
+    env_file:
+      - path: default.env
+        required: true

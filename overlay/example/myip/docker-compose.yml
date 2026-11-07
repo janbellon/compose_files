@@ -1,0 +1,10 @@
+include:
+  - ../../../base/myip/compose.yml
+
+services:
+  myip:
+    ports:
+      - 18966:18966
+    env_file:
+      - path: override.env
+        required: true
