@@ -8,6 +8,11 @@ services:
 #      caddy_0.respond: /* "Offline due to CVE-2026-115560" 200
       caddy_0.reverse_proxy: "http://flarum:8000"
       caddy_0.tls: /certs/nobell.fr/fullchain.pem /certs/nobell.fr/privkey.pem
+      caddy_0.header.Strict-Transport-Security: "\"max-age=31536000; includeSubDomains\""
+      caddy_0.header.X-Frame-Options: "SAMEORIGIN"
+      caddy_0.header.Content-Security-Policy: "\"frame-ancestors 'self'\""
+      caddy_0.header.X-Content-Type-Options: "nosniff"
+      caddy_0.header.Referrer-Policy: "strict-origin-when-cross-origin"
       caddy_1: "www.nobell.fr forum.nobell.fr"
       caddy_1.redir: "https://nobell.fr/{uri}"
     networks:
