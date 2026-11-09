@@ -1,0 +1,19 @@
+include:
+  - ../../../base/homeassistant/compose.yml
+
+services:
+  homeassistant:
+    networks:
+      vnet80:
+        ipv4_address: 10.0.80.10
+        ipv6_address: 2001:470:ca40:80::10
+    volumes:
+      - ./priv_config:/config
+      - /dev/ttyACM0:/dev/ttyACM0
+      - /dev/ttyACM1:/dev/ttyACM1
+    environment:
+      TZ: Europe/Paris
+
+networks:
+  vnet80:
+    external: true

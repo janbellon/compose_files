@@ -1,0 +1,9 @@
+services:
+  homeassistant:
+    image: homeassistant/home-assistant:2026.11
+    restart: unless-stopped
+    container_name: homeassistant
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    privileged: true
