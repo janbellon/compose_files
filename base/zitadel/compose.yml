@@ -1,6 +1,6 @@
 services:
   zitadel:
-    image: ghcr.io/zitadel/zitadel:v4.20.1
+    image: ghcr.io/zitadel/zitadel:v4.20.3
     container_name: zitadel
     restart: unless-stopped
     user: "0"
