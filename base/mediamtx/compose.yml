@@ -1,5 +1,5 @@
 services:
   mediamtx:
-    image: bluenviron/mediamtx:1.21.3
+    image: bluenviron/mediamtx:1.21.4
     container_name: mediamtx
     restart: unless-stopped
