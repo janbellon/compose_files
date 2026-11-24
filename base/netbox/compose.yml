@@ -1,6 +1,6 @@
 services:
   netbox: &netbox
-    image: netboxcommunity/netbox:v4.7.2
+    image: netboxcommunity/netbox:v4.7.5
     container_name: netbox
     restart: unless-stopped
     user: "netbox:root"
