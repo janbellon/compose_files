@@ -15,7 +15,7 @@ services:
 
   flarum_db:
     container_name: flarum_db
-    image: mariadb:12.3
+    image: mariadb:13.0
     restart: unless-stopped
     env_file:
       - path: default.env

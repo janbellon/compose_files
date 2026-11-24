@@ -14,7 +14,7 @@ services:
       - firefly_db
 
   firefly_db:
-    image: mariadb:13.0.1-rc
+    image: mariadb:13.1.1-rc
     container_name: firefly_db
     restart: unless-stopped
     env_file:
